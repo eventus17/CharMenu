@@ -69,18 +69,6 @@ void CharMenu__draw(CharMenu *self)
 
 void CharMenu__init(CharMenu *self)
 {
-	
-	self->button_wait = &CharMenu__button_wait;
-	self->button_is_pressed = &CharMenu__button_is_pressed;
-	self->button_read = &CharMenu__button_read;
-	self->draw = &CharMenu__draw;
-	self->lcd_number = &CharMenu__lcd_number;
-	self->print_scroll = &CharMenu__print_scroll;
-	self->current_menu = NULL;
-	self->menu_root = new_Menu(self->menu_root);
-	
-	self->menu_root->text = "ENTER]     [BACK";
-	
 	CHARMENU_BUTTON_BACK_PORT |= (1<<CHARMENU_BUTTON_BACK_DOWN);
 	CHARMENU_BUTTON_ENTER_PORT |= (1<<CHARMENU_BUTTON_ENTER_DOWN);
 	CHARMENU_BUTTON_NEXT_PORT |= (1<<CHARMENU_BUTTON_NEXT_DOWN);
@@ -162,14 +150,12 @@ void CharMenu__lcd_number(CharMenu *self, uint8_t number, uint8_t pad)
 void CharMenu__print_scroll(CharMenu *self, uint8_t pos, uint8_t scale)
 {
 	const uint8_t pixels_per_char = 6;
-	uint8_t max_chars = 9;
-	if (scale<max_chars)
-		max_chars = scale; //scroll is only small
-	
+	const uint8_t max_chars = 13;
+	const uint8_t max_progress = pixels_per_char*max_chars;
 	uint8_t i;
 	uint8_t c[1]; //the character 
 	__lcd_gotoXY(0,1);
-	for (i=0;i<max_chars;i++)
+	for (i=0;i<16;i++)
 	{
 		if (i==(pos*max_chars/scale))
 			c[0] = (uint8_t)124;//"|"
@@ -177,10 +163,8 @@ void CharMenu__print_scroll(CharMenu *self, uint8_t pos, uint8_t scale)
 			c[0] = (uint8_t)45;//"-"
 		__lcd_string(c, 1);
 	}
-	__lcd_gotoXY(9,1);
-	self->lcd_number(self, pos+1, 3);
-	__lcd_string("/",1);
-	self->lcd_number(self, scale,3);
+	__lcd_gotoXY(13,1);
+	self->lcd_number(self, pos, 3);
 	return;
 }
 

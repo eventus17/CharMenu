@@ -19,7 +19,7 @@
 #define CHARMENU_BUTTON_BACK_DDR	DDRD
 #define CHARMENU_BUTTON_PREV_DDR	DDRD
 #define CHARMENU_BUTTON_NEXT_DDR	DDRD
-///Enter the pin number for each of the BUTTON (Pull-UP)
+///Enter the pin number for each of the cm_Button 
 #define CHARMENU_BUTTON_ENTER_DOWN	1 ///means Enter button is in PIND-bit 1
 #define CHARMENU_BUTTON_BACK_DOWN	2
 #define CHARMENU_BUTTON_PREV_DOWN	0

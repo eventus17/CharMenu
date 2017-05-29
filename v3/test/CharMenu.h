@@ -99,7 +99,14 @@ void	CharMenu__print_scroll(CharMenu *self, uint8_t pos, uint8_t scale);
 #define new_CharMenu(self) \
 	malloc(sizeof(CharMenu)); \
 	self->init = &CharMenu__init;\
-	self->init(self);
+	self->button_wait = &CharMenu__button_wait;\
+	self->button_is_pressed = &CharMenu__button_is_pressed;\
+	self->button_read = &CharMenu__button_read;\
+	self->draw = &CharMenu__draw;\
+	self->lcd_number = &CharMenu__lcd_number;\
+	self->print_scroll = &CharMenu__print_scroll;\
+	self->current_menu = NULL;\
+	self->menu_root = new_Menu(self->menu_root);
 
 
 
